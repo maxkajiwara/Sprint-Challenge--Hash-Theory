@@ -30,6 +30,9 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 
     if (j != -1)
     {
+      // free memory
+      destroy_hash_table(ht);
+
       return create_answer(i, j);
     }
   }
