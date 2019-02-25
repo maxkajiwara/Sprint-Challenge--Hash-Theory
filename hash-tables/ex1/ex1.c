@@ -17,15 +17,10 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
 
-  // add the weights to the hash table
+  // iterate through weights
   for (int i = 0; i < length; i++)
   {
-    hash_table_insert(ht, weights[i], i);
-  }
-
-  // look for a valid pair
-  for (int i = 0; i < length; i++)
-  {
+    // look for pair
     int j = hash_table_retrieve(ht, limit - weights[i]);
 
     if (j != -1)
@@ -35,7 +30,13 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 
       return create_answer(i, j);
     }
+
+    // add weight to hash table
+    hash_table_insert(ht, weights[i], i);
   }
+
+  // free memory
+  destroy_hash_table(ht);
 
   return NULL;
 }
